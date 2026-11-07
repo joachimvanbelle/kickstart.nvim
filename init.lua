@@ -114,6 +114,14 @@ do
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
+  
+  -- Tab key inserts spaces
+  vim.o.expandtab = true
+
+  -- Set tab with to 2 spaces
+  vim.o.tabstop = 2
+  vim.o.shiftwidth = 2
+  vim.o.softtabstop = 2
 
   -- Don't show the mode, since it's already in the status line
   vim.o.showmode = false
@@ -423,19 +431,31 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
-    },
-  }
-
+  -- vim.pack.add { gh 'folke/tokyonight.nvim' }
+  -- ---@diagnostic disable-next-line: missing-fields
+  -- require('tokyonight').setup {
+  --   styles = {
+  --     comments = { italic = false }, -- Disable italics in comments
+  --   },
+  -- }
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
+  -- vim.cmd.colorscheme 'tokyonight-night'
 
+  vim.pack.add { gh 'AlexvZyl/nordic.nvim' }
+  ---@diagnostic disable-next-line: missing-fields
+  require('nordic').setup {
+    on_highlight = function(highlights, _)
+      for _, hl in pairs(highlights) do
+        hl.italic = false
+      end
+    end,
+  }
+  vim.cmd.colorscheme 'nordic'
+
+  vim.api.nvim_set_hl(0, 'Cursor', { bg = '#81A1C1' })
+  vim.o.guicursor = 'n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor'
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
   require('todo-comments').setup { signs = false }
